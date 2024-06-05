@@ -1,0 +1,26 @@
+离线安装alpine软件：
+https://www.cnblogs.com/lgwyyds/articles/16496597.html  >>>>
+
+# 把alpine源替换成阿里的alpine源
+sed -ir 's#dl-cdn.alpinelinux.org#mirrors.aliyun.com#g' /etc/apk/repositories
+
+# 更新一下仓库
+apk update
+
+# 下载telnet
+apk add busybox-extras
+
+# 获取telnet的安装包
+apk fetch busybox-extras
+
+# ls看下当前的目录，把获取到的安装包传送到需要安装的环境
+
+# 在无外网的环境进行本地安装
+apk add --allow-untrusted busybox-extras-1.34.1-r5.apk
+#######################
+报错：它在校验
+# apk add --allow-untrusted busybox-extras-1.27.2-r11.apk 
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.8/main/x86_64/APKINDEX.tar.gz
+
+解决：把这里面的下载源注释掉就好了
+vi /etc/apk/repositories
