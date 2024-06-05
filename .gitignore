@@ -10,3 +10,4 @@ __debug_bin
 !/resources/template/theme/default-theme-anatole
 scripts/build/vendor
 vendor
+scripts/build/go.mod

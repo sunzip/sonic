@@ -2,10 +2,13 @@
 
 # 重新vendor
 refresh_vendor(){
+    mkdir -p scripts/build/vendor
     cp go.mod scripts/build/
     go mod vendor
-    mv -f vendor scripts/build/
+    # https://deepinout.com/linux/linux-ask-and-questions/153_tk_1704111721.html  无法覆盖mv，只能先cp 在rm
+    cp -rf vendor/* scripts/build/vendor/
 }
+
 start=$(date "+%H:%M:%S")
 cd ../..
 
@@ -15,25 +18,25 @@ NOW=$(date '+%FT%T%z')
 
 # -f 参数判断 $file 是否存在
 if [ ! -f "scripts/build/go.mod" ]; then
-    echo go.mod不存在
+    echo 旧go.mod不存在
     refresh_vendor
 else
-    echo go.mod存在
+    echo 旧go.mod存在
     # 根据go mod变化，更新vendor
     modMd5New=`md5sum go.mod|awk '{print $1}'`
     modMd5Old=`md5sum scripts/build/go.mod|awk '{print $1}'`
     if [ "$modMd5New" != "$modMd5Old" ]; then
-        echo "go.mod已改变" \| new $modMd5New \| old $modMd5Old
+        echo "旧go.mod已改变" \| new $modMd5New \| old $modMd5Old
         refresh_vendor
     else
-        echo "go.mod未改变" $modMd5New
+        echo "旧go.mod未改变" $modMd5New
     fi
 fi
 
 
-# cp -r scripts/build/vendor/* vendor/ \
-# && docker build --tag sonic:${VERSION} --file scripts/Dockerfile \
-# --build-arg BUILD_COMMIT=${COMMIT} --build-arg SONIC_VERSION=${VERSION} --build-arg BUILD_TIME=${NOW}  \
-# .  && rm -rf vendor
+cp -r scripts/build/vendor/* vendor/ \
+&& docker build --tag sonic:${VERSION} --file scripts/Dockerfile \
+--build-arg BUILD_COMMIT=${COMMIT} --build-arg SONIC_VERSION=${VERSION} --build-arg BUILD_TIME=${NOW}  \
+.  && rm -rf vendor
 
 echo $(date "+%Y-%m-%d") build耗时 $start '~' $(date "+%H:%M:%S") \| VERSION[$VERSION] \| COMMIT[$COMMIT] \| NOW[$NOW]
