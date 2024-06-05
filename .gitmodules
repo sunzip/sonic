@@ -1,3 +1,18 @@
 [submodule "resources/template/theme/default-theme-anatole"]
 	path = resources/template/theme/default-theme-anatole
-	url = https://github.com/go-sonic/default-theme-anatole.git
+	url = git@github.com:go-sonic/default-theme-anatole.git
+[submodule "resources/template/theme/sonic-theme-Journal"]
+	path = resources/template/theme/sonic-theme-Journal
+	url = git@github.com:hooxuu/sonic-theme-Journal.git
+[submodule "resources/template/theme/sonic-theme-earth"]
+	path = resources/template/theme/sonic-theme-earth
+	url = git@github.com:Meepoljdx/sonic-theme-earth.git
+[submodule "resources/template/theme/sonic-theme-papermod"]
+	path = resources/template/theme/sonic-theme-papermod
+	url = git@github.com:jakezhu9/sonic-theme-papermod.git
+[submodule "resources/template/theme/sonic_theme_clark"]
+	path = resources/template/theme/sonic_theme_clark
+	url = git@github.com:ClarkQAQ/sonic_theme_clark.git
+[submodule "resources/template/theme/sonic-theme-tink"]
+	path = resources/template/theme/sonic-theme-tink
+	url = git@github.com:raisons/sonic-theme-tink.git

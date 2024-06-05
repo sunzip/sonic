@@ -8,6 +8,7 @@ sonic
 __debug_bin
 /resources/template/theme/
 !/resources/template/theme/default-theme-anatole
+!/resources/template/theme/sonic-theme-Journal
 scripts/build/vendor
 vendor
 scripts/build/go.mod

@@ -1,0 +1,7 @@
+scripts/build
+.github
+.git
+.vscode
+logs
+upload
+sonic.db

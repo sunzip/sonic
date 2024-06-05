@@ -7,6 +7,7 @@ refresh_vendor(){
     go mod vendor
     # https://deepinout.com/linux/linux-ask-and-questions/153_tk_1704111721.html  无法覆盖mv，只能先cp 在rm
     cp -rf vendor/* scripts/build/vendor/
+    rm -rf vendor
 }
 
 start=$(date "+%H:%M:%S")
@@ -33,10 +34,10 @@ else
     fi
 fi
 
-
+mkdir -p vendor/
 cp -r scripts/build/vendor/* vendor/ \
 && docker build --tag sonic:${VERSION} --file scripts/Dockerfile \
 --build-arg BUILD_COMMIT=${COMMIT} --build-arg SONIC_VERSION=${VERSION} --build-arg BUILD_TIME=${NOW}  \
 .  && rm -rf vendor
 
-echo $(date "+%Y-%m-%d") build耗时 $start '~' $(date "+%H:%M:%S") \| VERSION[$VERSION] \| COMMIT[$COMMIT] \| NOW[$NOW]
+echo $(date "+%Y-%m-%d") build耗时 $start '~' $(date "+%H:%M:%S") \| VERSION/tag[$VERSION] \| COMMIT[$COMMIT] \| NOW[$NOW]

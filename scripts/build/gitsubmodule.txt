@@ -1,0 +1,21 @@
+https://www.jianshu.com/p/f8a55b972972
+
+添加子仓库
+	git submodule add -f git@github.com:go-sonic/default-theme-anatole.git resources/template/theme/default-theme-anatole
+	git submodule add -f git@github.com:hooxuu/sonic-theme-Journal.git resources/template/theme/sonic-theme-Journal
+	git submodule add -f git@github.com:ClarkQAQ/sonic_theme_clark.git resources/template/theme/sonic_theme_clark
+	git submodule add -f git@github.com:Meepoljdx/sonic-theme-earth.git resources/template/theme/sonic-theme-earth
+	git submodule add -f git@github.com:jakezhu9/sonic-theme-papermod.git resources/template/theme/sonic-theme-papermod
+	git submodule add -f git@github.com:raisons/sonic-theme-tink.git resources/template/theme/sonic-theme-tink
+
+初始化本地配置文件
+	git submodule init
+	检出父仓库列出的commit
+	git submodule update
+
+
+删除子仓库
+删除.gitsubmodule里相关部分
+删除.git/config 文件里相关字段
+删除子仓库目录。
+$ git rm --cached <本地路径>
