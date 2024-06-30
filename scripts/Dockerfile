@@ -28,7 +28,7 @@ go build -o sonic -ldflags="-s -w -X github.com/go-sonic/sonic/consts.SonicVersi
 RUN mkdir -p /app/conf && \
     mkdir /app/resources && \
     cp -r /go/src/github.com/go-sonic/sonic/sonic /app/ && \
-    cp -r /go/src/github.com/go-sonic/sonic/conf /app/ && \
+    cp -r /go/src/github.com/go-sonic/sonic/conf/config.yaml /app/conf/config.yaml && \
     cp -r /go/src/github.com/go-sonic/sonic/resources /app/ && \
     cp /go/src/github.com/go-sonic/sonic/scripts/docker_init.sh /app/
 
@@ -39,6 +39,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 # RUN apk update
 
 COPY --from=builder /app/ /app/
+# 检查拷贝内容
+COPY . /go/src/github.com/go-sonic/sonic/ 
 
 RUN  apk add --no-cache tzdata \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \

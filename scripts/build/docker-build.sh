@@ -14,6 +14,7 @@ start=$(date "+%H:%M:%S")
 cd ../..
 
 VERSION=$(date "+%Y%m%d") #一个版本变一次,# $(date "+%Y-%m-%d %H:%M:%S")
+IMAGE_TAG=v1.1.4 #一个版本变一次, 对应的是在线检查版本更新
 COMMIT=$(git rev-parse --verify HEAD)
 NOW=$(date '+%FT%T%z')
 
@@ -37,7 +38,7 @@ fi
 mkdir -p vendor/
 cp -r scripts/build/vendor/* vendor/ \
 && docker build --tag sonic:${VERSION} --file scripts/Dockerfile \
---build-arg BUILD_COMMIT=${COMMIT} --build-arg SONIC_VERSION=${VERSION} --build-arg BUILD_TIME=${NOW}  \
+--build-arg BUILD_COMMIT=${COMMIT} --build-arg SONIC_VERSION=${IMAGE_TAG} --build-arg BUILD_TIME=${NOW}  \
 .  && rm -rf vendor
 
-echo $(date "+%Y-%m-%d") build耗时 $start '~' $(date "+%H:%M:%S") \| VERSION/tag[$VERSION] \| COMMIT[$COMMIT] \| NOW[$NOW]
+echo $(date "+%Y-%m-%d") build耗时 $start '~' $(date "+%H:%M:%S") \| VERSION[$VERSION] \| image tag[$IMAGE_TAG] \| COMMIT[$COMMIT] \| NOW[$NOW]

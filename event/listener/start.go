@@ -83,7 +83,7 @@ func (s *StartListener) printStartInfo(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	site := logger.BlueBold + "Sonic started at         " + blogURL + logger.Reset
+	site := logger.BlueBold + "Sonic started at [ 显示 db> config| 实际运行是config ]         " + blogURL + logger.Reset
 	log.Info(site)
 	fmt.Println(site)
 
