@@ -2,7 +2,6 @@ package listener
 
 import (
 	"context"
-	"fmt"
 
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -85,7 +84,6 @@ func (s *StartListener) printStartInfo(ctx context.Context) error {
 	}
 	site := logger.BlueBold + "Sonic started at [ 显示 db> config| 实际运行是config ]         " + blogURL + logger.Reset
 	log.Info(site)
-	fmt.Println(site)
 
 	adminURLPath, err := s.optionService.GetAdminURLPath(ctx)
 	if err != nil {
@@ -93,6 +91,5 @@ func (s *StartListener) printStartInfo(ctx context.Context) error {
 	}
 	adminSite := logger.BlueBold + "Sonic admin started at         " + blogURL + "/" + adminURLPath + logger.Reset
 	log.Info(adminSite)
-	fmt.Println(adminSite)
 	return nil
 }

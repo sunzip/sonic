@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/go-sonic/sonic/log"
 	"github.com/go-sonic/sonic/util/xerr"
 )
 
@@ -221,7 +222,7 @@ func FileIsExisted(filename string) bool {
 func MakeDir(dir string) error {
 	if !FileIsExisted(dir) {
 		if err := os.MkdirAll(dir, 0o777); err != nil { // os.ModePerm
-			fmt.Println("MakeDir failed:", err)
+			log.Errorf("MakeDir failed:", err.Error())
 			return err
 		}
 	}

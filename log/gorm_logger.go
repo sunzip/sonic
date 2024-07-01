@@ -20,7 +20,8 @@ type gormLogger struct {
 	traceStr     string
 	traceWarnStr string
 	traceErrStr  string
-	zapLogger    *zap.Logger
+
+	zapLogger *zap.Logger
 }
 
 func NewGormLogger(conf *config.Config, zapLogger *zap.Logger) logger.Interface {
@@ -28,7 +29,7 @@ func NewGormLogger(conf *config.Config, zapLogger *zap.Logger) logger.Interface 
 		SlowThreshold:             200 * time.Millisecond,
 		LogLevel:                  GetGormLogLevel(conf.Log.Levels.Gorm),
 		IgnoreRecordNotFoundError: true,
-		Colorful:                  config.LogToConsole(),
+		Colorful:                  config.LogTo(config.Console),
 	}
 	gl := &gormLogger{
 		Config:       logConfig,
@@ -89,6 +90,7 @@ func (l *gormLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql 
 		}
 	case l.LogLevel == logger.Info:
 		sql, rows := fc()
+
 		if rows == -1 {
 			l.zapLogger.WithOptions(zap.AddCallerSkip(getCallerSkip()-level)).Sugar().Infof(l.traceStr, float64(elapsed.Nanoseconds())/1e6, "-", sql)
 		} else {

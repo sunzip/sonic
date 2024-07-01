@@ -18,6 +18,7 @@ import (
 	"github.com/go-sonic/sonic/handler/content"
 	"github.com/go-sonic/sonic/handler/content/api"
 	"github.com/go-sonic/sonic/handler/middleware"
+	"github.com/go-sonic/sonic/log"
 	"github.com/go-sonic/sonic/model/dto"
 	"github.com/go-sonic/sonic/service"
 	"github.com/go-sonic/sonic/template"
@@ -216,7 +217,7 @@ func (s *Server) Run(ctx context.Context) error {
 		if err := s.HTTPServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			// print err info when httpServer start failed
 			s.logger.Error("unexpected error from ListenAndServe", zap.Error(err))
-			fmt.Printf("http server start error:%s\n", err.Error())
+			log.Errorf("http server start error:%s\n", err.Error())
 			os.Exit(1)
 		}
 	}()
