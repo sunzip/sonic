@@ -120,18 +120,46 @@ func (o *optionServiceImpl) GetOrByDefaultWithErr(ctx context.Context, p propert
 	return value, nil
 }
 
+/*
+string db配置的url 1，用作用户在本地电脑上访问的地址. 优先级高
+string config配置的url 2，是服务启动的地址，url 1 指向的是url 2，但是用户本地无法直接访问 url 2
+*/
 func (o *optionServiceImpl) GetBlogBaseURL(ctx context.Context) (string, error) {
-	blogURL, err := o.GetOrByDefaultWithErr(ctx, property.BlogURL, "")
+	url1, url2, err := o.GetBlogBaseURLBase(ctx)
 	if err != nil {
 		return "", err
+	} else if len(url1) > 0 {
+		return url1, nil
+	} else {
+		return url2, nil
+	}
+}
+
+/*
+string db配置的url 1，用作用户在本地电脑上访问的地址. 优先级高
+string config配置的url 2，是服务启动的地址，url 1 指向的是url 2，但是用户本地无法直接访问 url 2
+*/
+func (o *optionServiceImpl) GetBlogBaseURLBase(ctx context.Context) (string, string, error) {
+	url2 := ""
+	if o.Config.Server.Host == "0.0.0.0" {
+		url2 = fmt.Sprintf("http://127.0.0.1:%s", o.Config.Server.Port)
+	} else {
+		url2 = fmt.Sprintf("http://%s:%s", o.Config.Server.Host, o.Config.Server.Port)
+	}
+
+	blogURL, err := o.GetOrByDefaultWithErr(ctx, property.BlogURL, "")
+	if err != nil {
+		return "", "", err
 	}
 	if blogURL != "" {
-		return blogURL.(string), nil
+		return blogURL.(string), url2, nil
 	}
 	if o.Config.Server.Host == "0.0.0.0" {
-		return fmt.Sprintf("http://127.0.0.1:%s", o.Config.Server.Port), nil
+		url2 = fmt.Sprintf("http://127.0.0.1:%s", o.Config.Server.Port)
+		return url2, url2, nil
 	} else {
-		return fmt.Sprintf("http://%s:%s", o.Config.Server.Host, o.Config.Server.Port), nil
+		url2 = fmt.Sprintf("http://%s:%s", o.Config.Server.Host, o.Config.Server.Port)
+		return url2, url2, nil
 	}
 }
 

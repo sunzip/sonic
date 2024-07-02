@@ -13,6 +13,7 @@ type OptionService interface {
 	GetOrByDefaultWithErr(ctx context.Context, p property.Property, defaultValue interface{}) (interface{}, error)
 	GetOrByDefault(ctx context.Context, p property.Property) interface{}
 	GetBlogBaseURL(ctx context.Context) (string, error)
+	GetBlogBaseURLBase(ctx context.Context) (string, string, error)
 	IsEnabledAbsolutePath(ctx context.Context) (bool, error)
 	GetPathSuffix(ctx context.Context) (string, error)
 	GetArchivePrefix(ctx context.Context) (string, error)
